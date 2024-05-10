@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dividir cuenta entre personas</title>
+  <title>Calculadora de Gastos</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Dividir cuenta entre personas</h1>
+  <h1>Calculadora de Gastos</h1>
   
   <div id="contenedorTarjetas">
     <div class="tarjeta">
+      <h3>Persona 1</h3>
       <label for="nombre1">Nombre:</label>
       <input type="text" id="nombre1" name="nombre1" required><br>
       
@@ -22,8 +23,12 @@
   <button id="calcular">Calcular</button>
 
   <div id="totalGastos">
-    <!-- Aquí se mostrará el total de gastos y el resultado de dividirlo entre las personas -->
+    <span id="spanTotalGastos"></span><br>
+    <span id="spanCantidadPersonas"></span><br>
+    <span id="spanPromedio"></span><br>
   </div>
+
+  <button id="reiniciarBtn">Reiniciar</button>
 
   <script src="script.js"></script>
 </body>

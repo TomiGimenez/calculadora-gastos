@@ -17,36 +17,63 @@ calcularBtn.addEventListener('click', function() {
     const totalGastado = calcularTotalGastado();
     const cantidadPersonas = personas - 1;
     const promedio = totalGastado / cantidadPersonas;
+
+    const divTotalGastos = document.getElementById('totalGastos');
+    divTotalGastos.style.display = 'block'; // Mostrar el div totalGastos
   
-    totalGastos.innerHTML = `
-      <p>Total de gastos: $${totalGastado.toFixed(2)}</p>
-      <p>Cantidad de personas: ${cantidadPersonas}</p>
-      <p>Gasto por persona: $${promedio.toFixed(2)}</p>
-    `;
+    // Seleccionar los elementos span para mostrar los resultados
+    const spanTotalGastos = document.getElementById('spanTotalGastos');
+    const spanCantidadPersonas = document.getElementById('spanCantidadPersonas');
+    const spanPromedio = document.getElementById('spanPromedio');
+
+    // Actualizar el contenido de los elementos span con los resultados
+    spanTotalGastos.textContent = `Total de gastos: $${totalGastado.toFixed(2)}`;
+    spanCantidadPersonas.textContent = `Cantidad de personas: ${cantidadPersonas}`;
+    spanPromedio.textContent = `Gasto por persona: $${promedio.toFixed(2)}`;
   
     const montosPorPersona = [];
     const nombresPersonas = []; // Agregar este array para almacenar nombres
+    const tarjetasResultado = []; // Array para almacenar tarjetas de resultado
+
     for (let i = 1; i <= cantidadPersonas; i++) {
-      const nombre = document.getElementById(`nombre${i}`).value.trim(); // Obtener el nombre
-      const gasto = parseFloat(document.getElementById(`gasto${i}`).value);
-      if (!isNaN(gasto)) {
-        montosPorPersona.push(gasto);
-        nombresPersonas.push(nombre); // Almacenar el nombre en el array
+      let nombre = document.getElementById(`nombre${i}`).value.trim();
+      if (nombre === "") {
+        nombre = `Persona ${i}`;
       }
+      const gasto = parseFloat(document.getElementById(`gasto${i}`).value);
+      if (isNaN(gasto)) {
+        montosPorPersona.push(0); // Si el gasto es NaN, se toma como 0
+      } else {
+        montosPorPersona.push(gasto);
+      }
+      nombresPersonas.push(nombre);
     }
   
-    const cantidades = montosPorPersona.map((gasto, index) => { // Usar index para acceder al nombre correspondiente
-      const nombre = nombresPersonas[index]; // Obtener el nombre correspondiente
+    const cantidades = montosPorPersona.map((gasto, index) => {
+      const nombre = nombresPersonas[index];
+      let mensaje = '';
       if (gasto > promedio) {
-        return `${nombre} debe COBRAR $${(gasto - promedio).toFixed(2)}`;
+        mensaje = `${nombre} debe COBRAR $${(gasto - promedio).toFixed(2)}`;
+        tarjetasResultado.push(`<div class="resultadoTarjeta cobrar">${mensaje}</div>`);
       } else if (gasto < promedio) {
-        return `${nombre} debe PAGAR $${(promedio - gasto).toFixed(2)}`;
+        mensaje = `${nombre} debe PAGAR $${(promedio - gasto).toFixed(2)}`;
+        tarjetasResultado.push(`<div class="resultadoTarjeta pagar">${mensaje}</div>`);
       } else {
-        return `${nombre} no cobra ni paga`;
+        mensaje = `${nombre} no cobra ni paga`;
+        tarjetasResultado.push(`<div class="resultadoTarjeta sinCambios">${mensaje}</div>`);
       }
+      return mensaje;
+    });
+
+    // Eliminar las tarjetas de resultado existentes si las hay
+    const tarjetasAnteriores = document.querySelectorAll('.resultadoTarjeta');
+    tarjetasAnteriores.forEach(tarjeta => {
+        tarjeta.remove();
     });
   
-    totalGastos.innerHTML += `<p>${cantidades.join('<br>')}</p>`;
+    tarjetasResultado.forEach(tarjeta => {
+      totalGastos.innerHTML += tarjeta;
+    });
 });
   
 
@@ -55,6 +82,7 @@ function agregarNuevaTarjeta() {
   const nuevaTarjeta = document.createElement('div');
   nuevaTarjeta.className = 'tarjeta';
   nuevaTarjeta.innerHTML = `
+    <h3>Persona ${personas}</h3>
     <label for="nombre${personas}">Nombre:</label>
     <input type="text" id="nombre${personas}" name="nombre${personas}" required><br>
     
@@ -74,3 +102,28 @@ function calcularTotalGastado() {
   }
   return total;
 }
+
+// Agrega el evento para el botón de reinicio
+reiniciarBtn.addEventListener('click', function() {
+  // Restablecer el HTML del contenedor de tarjetas y el total de gastos
+  contenedorTarjetas.innerHTML = `
+    <div class="tarjeta">
+      <h3>Persona 1</h3>
+      <label for="nombre1">Nombre:</label>
+      <input type="text" id="nombre1" name="nombre1" required><br>
+      
+      <label for="gasto1">Gasto:</label>
+      <input type="number" id="gasto1" name="gasto1" min="0" step="0.01" required><br>
+    </div>
+  `;
+  personas = 1; // Reiniciar el contador de personas
+
+  // Eliminar las tarjetas de resultado existentes si las hay
+  const tarjetasAnteriores = document.querySelectorAll('.resultadoTarjeta');
+  tarjetasAnteriores.forEach(tarjeta => {
+      tarjeta.remove();
+  });
+
+  const divTotalGastos = document.getElementById('totalGastos');
+  divTotalGastos.style.display = 'none'; // Ocultar el div totalGastos
+});

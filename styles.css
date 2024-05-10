@@ -1,32 +1,115 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-  }
-  
-  h1 {
-    text-align: center;
-  }
-  
-  .tarjeta {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
-  button {
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  #totalGastos {
-    margin-top: 20px;
-  }
-  
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 40px; /* Aumenté el margen superior para separar el título del resto del contenido */
+  margin-bottom: 30px; /* Agregué margen inferior para dar espacio entre el título y el contenido */
+  color: #333;
+  font-size: 36px; /* Aumenté el tamaño del texto */
+  text-transform: uppercase; /* Convertí el texto a mayúsculas */
+  letter-spacing: 2px; /* Añadí un espacio entre letras para mayor legibilidad */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Agregué sombra al texto para resaltar */
+}
+
+
+#contenedorTarjetas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.tarjeta {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  padding: 15px;
+  width: 300px;
+}
+
+h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: calc(100% - 16px);
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #fff;
+  background-color: #3498db;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+#totalGastos {
+  display: none;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+/* Estilos para los resultados */
+#totalGastos span {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  background-color: #dcdcdc; /* Fondo gris claro */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.resultadoTarjeta {
+  margin-top: 10px;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+}
+
+.cobrar {
+  background-color: #2ecc71; /* Verde */
+  color: #fff;
+}
+
+.pagar {
+  background-color: #e74c3c; /* Rojo */
+  color: #fff;
+}
+
+.sinCambios {
+  background-color: #3498db; /* Azul */
+  color: #fff;
+}
